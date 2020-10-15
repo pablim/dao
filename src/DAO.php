@@ -1,9 +1,11 @@
 <?php
-namespace model\dao;
+namespace pablovf\model;
 
-use utils\Util;
-use config\Conexao;
 use \PDO;
+
+use pablovf\model\Connection;
+use phputils\Str;
+use phputils\Arr;
 
 class DAO {
 
@@ -23,13 +25,12 @@ class DAO {
   ];
 
   function __construct($class) {
-    $conn = new Conexao();
-		$this->connection = $conn->getConexao();
-    //$this->className = str_replace("/", "\\", "model/domain/" . Util::classCase($this->tableName));
+    $conn = new Connection();
+		$this->connection = $conn->getConnection();
     $this->className = str_replace("/", "\\", $class);
     
     $classParts = explode("\\", $class);
-    $this->tableName = Util::convertCase($classParts[count($classParts)-1], 
+    $this->tableName = Str::convertCase($classParts[count($classParts)-1], 
       "pascal", "snake");
 
     $properties = $this->className::properties();
@@ -38,9 +39,6 @@ class DAO {
   public function find($key) {
     try {
       $keyProperty = $this->className::getKey();
-
-      // $sql = "SELECT * FROM " . $this->tableName . " "
-      //     . " WHERE " . Util::primarys($this->tableName) ."= :key";
 
       $sql = "SELECT * FROM " . $this->tableName . " "
           . " WHERE " . $keyProperty ."= :key";
@@ -77,7 +75,7 @@ class DAO {
       } else {
         $property = $condition[0];
         $operator = $condition[1];
-        $camelProperty = Util::convertCase($property, "camel", "snake");
+        $camelProperty = Str::convertCase($property, "camel", "snake");
         $sql .= $camelProperty . $operator . " :" . $property 
             . $literalCondition;
       }
@@ -232,11 +230,11 @@ class DAO {
       $keyProperty = $this->className::getKey();
       foreach ($object as $property => $value) {
         $camelProperty = $property;
-        if (!Util::verify("key", $properties[$property], false) &&
-            Util::verify("column", $properties[$property], true)) {
+        if (!Arr::verify("key", $properties[$property], false) &&
+            Arr::verify("column", $properties[$property], true)) {
           // var_dump($value);
           //$property = Util::snakeCase($property);
-          $property = Util::convertCase($property, "camel", "snake");
+          $property = Str::convertCase($property, "camel", "snake");
           $columnsName .= $property . ", ";
           $columnsBinds .= ":" . $property . ", ";
           array_push($binds, array($property, $value, $this->bindTypes[
@@ -280,7 +278,7 @@ class DAO {
     
     foreach ($object as $property => $value) {
       $camelProperty = $property;
-      $property = Util::convertCase($property, "camel", "snake");
+      $property = Str::convertCase($property, "camel", "snake");
       
       if ($property != $keyProperty) {
         $columnsBinds .= $property . " = :" . $property . ", ";
@@ -309,7 +307,7 @@ class DAO {
       $keyProperty = $this->className::getKey();
       foreach ($object as $property => $value) {
         $camelProperty = $property;
-        $property = Util::convertCase($property, "camel", "snake");
+        $property = Str::convertCase($property, "camel", "snake");
         if ($property != $keyProperty) {
           $columnsBinds .= $property . " = :" . $property . ", ";
         } else {
@@ -437,7 +435,7 @@ class DAO {
 
       $sqlSum = "";
       foreach ($fields as $field) {
-        $camelField = Util::convertCase($field, "camel", "snake");
+        $camelField = Str::convertCase($field, "camel", "snake");
         $sqlSum .= "SUM(" . $camelField . "), ";
       }
 

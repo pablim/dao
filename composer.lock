@@ -1,0 +1,42 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "f5b9739dfa526ce3fc148ddb4e35e765",
+    "packages": [
+        {
+            "name": "pablovf/phputils",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pablim/phputils.git",
+                "reference": "bdd5e9ff6b3eeb9e9292813e1831168216e8ffab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pablim/phputils/zipball/bdd5e9ff6b3eeb9e9292813e1831168216e8ffab",
+                "reference": "bdd5e9ff6b3eeb9e9292813e1831168216e8ffab",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "A set of utils classes for PHP",
+            "time": "2020-09-26T22:10:11+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": "^7.2"
+    },
+    "platform-dev": []
+}
